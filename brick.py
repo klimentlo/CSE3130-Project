@@ -14,19 +14,19 @@ class Brick(MySprite):
 
 
         # Top collision box
-        self.__BRICK_TOP = Box(100, 5)
+        self.__BRICK_TOP = Box(90, 5)
         self.__BRICK_TOP.setColor(Color.RED)
 
         # Bottom collision box
-        self.__BRICK_BOTTOM = Box(100, 5)
+        self.__BRICK_BOTTOM = Box(90, 5)
         self.__BRICK_BOTTOM.setColor(Color.RED)
 
         # Left collision box
-        self.__BRICK_LEFT = Box(5, 50)
+        self.__BRICK_LEFT = Box(5, 40)
         self.__BRICK_LEFT.setColor(Color.BLUE)
 
         # Right collision box
-        self.__BRICK_RIGHT = Box(5, 50)
+        self.__BRICK_RIGHT = Box(5, 40)
         self.__BRICK_RIGHT.setColor(Color.BLUE)
 
         # CORNERS :(
@@ -101,8 +101,6 @@ class Brick(MySprite):
 
 
 
-
-
     def setBrickPOS(self, X=100, Y=100):
         '''
         sets all collision boxes and surfaces to the set location :D
@@ -113,8 +111,8 @@ class Brick(MySprite):
 
         BRICK.setPOS(X, Y)
         # Sides
-        self.__BRICK_TOP.setPOS(X, Y)
-        self.__BRICK_BOTTOM.setPOS(X, Y+self.__BRICK_SPRITE.getHeight()-self.__BRICK_BOTTOM.getHeight())
+        self.__BRICK_TOP.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y)
+        self.__BRICK_BOTTOM.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y+self.__BRICK_SPRITE.getHeight()-self.__BRICK_BOTTOM.getHeight())
         self.__BRICK_LEFT.setPOS(X, Y)
         self.__BRICK_RIGHT.setPOS(X+self.__BRICK_SPRITE.getWidth()-self.__BRICK_RIGHT.getWidth(), Y)
         # Corners
