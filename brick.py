@@ -113,16 +113,26 @@ class Brick(MySprite):
         # Sides
         self.__BRICK_TOP.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y)
         self.__BRICK_BOTTOM.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y+self.__BRICK_SPRITE.getHeight()-self.__BRICK_BOTTOM.getHeight())
-        self.__BRICK_LEFT.setPOS(X, Y)
-        self.__BRICK_RIGHT.setPOS(X+self.__BRICK_SPRITE.getWidth()-self.__BRICK_RIGHT.getWidth(), Y)
+        self.__BRICK_LEFT.setPOS(X, BRICK.getY() + BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
+        self.__BRICK_RIGHT.setPOS(X+self.__BRICK_SPRITE.getWidth()-self.__BRICK_RIGHT.getWidth(), BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
         # Corners
+        
 
     def blitBrick(self):
+        # Brick
         WINDOW.getSurface().blit(BRICK.getSurface(), BRICK.getPOS())
+        
+        # Sides
         WINDOW.getSurface().blit(BRICK.getLeftSurface(), BRICK.getLeftPOS())
         WINDOW.getSurface().blit(BRICK.getRightSurface(), BRICK.getRightPOS())
         WINDOW.getSurface().blit(BRICK.getTopSurface(), BRICK.getTopPOS())
         WINDOW.getSurface().blit(BRICK.getBottomSurface(), BRICK.getBottomPOS())
+        
+        # Corners
+        WINDOW.getSurface().blit(BRICK.getTopLeftSurface, BRICK.getTopLeftPOS())
+        WINDOW.getSurface().blit(BRICK.getTopRightSurface, BRICK.getTopRightPOS()())
+        WINDOW.getSurface().blit(BRICK.getBottomLeftSurface, BRICK.getBottomLeftPOS())
+        WINDOW.getSurface().blit(BRICK.getBottomRightSurface, BRICK.getBottomRightPOS())
 
 
 
