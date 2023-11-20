@@ -1,3 +1,1 @@
-# CSE3130-Project
-
-Multiday Project - BrickBreaker
+# CSE3130 - Multiday Project - BrickBreaker
