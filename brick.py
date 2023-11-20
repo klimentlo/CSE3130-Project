@@ -110,15 +110,22 @@ class Brick(MySprite):
         '''
 
         BRICK.setPOS(X, Y)
-        # Sides
-        self.__BRICK_TOP.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y)
-        self.__BRICK_BOTTOM.setPOS(BRICK.getX() + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y+self.__BRICK_SPRITE.getHeight()-self.__BRICK_BOTTOM.getHeight())
-        self.__BRICK_LEFT.setPOS(X, BRICK.getY() + BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
-        self.__BRICK_RIGHT.setPOS(X+self.__BRICK_SPRITE.getWidth()-self.__BRICK_RIGHT.getWidth(), BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
-        # Corners
+        # Sides         If this\/ doesn't work, change the X to Brick.getX() :D
+        self.__BRICK_TOP.setPOS(X + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y)
+        self.__BRICK_BOTTOM.setPOS(X + BRICK.getWidth()//2 - self.__BRICK_TOP.getWidth()//2, Y+self.__BRICK_SPRITE.getHeight()-self.__BRICK_BOTTOM.getHeight())
+        self.__BRICK_LEFT.setPOS(X, Y + BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
+        self.__BRICK_RIGHT.setPOS(X + self.__BRICK_SPRITE.getWidth()-self.__BRICK_RIGHT.getWidth(), BRICK.getHeight()//2-self.__BRICK_BOTTOM.getHeight()//2)
         
+        # Corners
+        self.__TOP_LEFT_CORNER.setPOS(X, Y)
+        self.__TOP_RIGHT_CORNER.setPOS(X + BRICK.getWidth()-self.__TOP_RIGHT_CORNER.getWidth(),Y)
+        self.__BOTTOM_LEFT_CORNER.setPOS(X, Y + BRICK.getHeight()-self.__BOTTOM_LEFT_CORNER.getHeight())
+        self.__BOTTOM_RIGHT_CORNER.setPOS(X + BRICK.getWidth()-self.__BOTTOM_RIGHT_CORNER.getWidth(), Y + BRICK.getHeight()-self.__BOTTOM_RIGHT_CORNER.getHeight())
 
+        
+        
     def blitBrick(self):
+      
         # Brick
         WINDOW.getSurface().blit(BRICK.getSurface(), BRICK.getPOS())
         
@@ -154,3 +161,5 @@ if __name__ == "__main__":
         WINDOW.clearScreen()
         BRICK.blitBrick()
         WINDOW.updateFrame()
+
+        
