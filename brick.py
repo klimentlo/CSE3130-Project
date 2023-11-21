@@ -243,4 +243,6 @@ if __name__ == "__main__":
         WINDOW.getSurface().blit(ball.getSurface(), ball.getPOS())
         WINDOW.updateFrame()
 
+        #
+
         
