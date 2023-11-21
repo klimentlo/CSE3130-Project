@@ -42,6 +42,9 @@ class MySprite:
         self.setX(X)
         self.setY(Y)
 
+    def setScale(self, SCALE):
+        self._SURFACE = pygame.transform.scale(self._SURFACE, (self.getWidth() * SCALE, self.getHeight() * SCALE))
+
     def changeDirX(self, DIR):
         self.__DIR_X *= DIR
 

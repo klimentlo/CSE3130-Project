@@ -30,7 +30,7 @@ if __name__ == "__main__":
     from window import Window
     from random import randrange
     pygame.init()
-    WINDOW = Window("Box", 800, 600, 30)
+    WINDOW = Window("Box", 800, 600, 60)
     #BOX = Box(100, 100)
     BOX = Box(175, 15)
     BOX2 = Box(15, 15)
