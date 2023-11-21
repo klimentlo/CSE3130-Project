@@ -42,6 +42,12 @@ class MySprite:
         self.setX(X)
         self.setY(Y)
 
+    def changeDirX(self, DIR):
+        self.__DIR_X *= DIR
+
+    def changeDirY(self, DIR):
+        self.__DIR_Y *= DIR
+
     def marqueeX(self, MAX_X, MIN_X=0):
         self.__X += self._SPD
 
@@ -119,15 +125,6 @@ class MySprite:
 
     def getSurface(self):
         return self._SURFACE
-
-    def isCollision(self, WIDTH, HEIGHT, POS):
-        '''
-        use the width, height, and position of an external sprite to text if it is colliding with the given sprite
-        :param WIDTH: int
-        :param HEIGHT: int
-        :param POS: tuple
-        :return: bool
-        '''
 
     def isCollision(self, WIDTH, HEIGHT, POS):
         '''

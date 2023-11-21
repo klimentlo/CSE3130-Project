@@ -146,12 +146,47 @@ class Brick(MySprite):
         WINDOW.getSurface().blit(BRICK.getTopRightSurface(), BRICK.getTopRightPOS())
         WINDOW.getSurface().blit(BRICK.getBottomLeftSurface(), BRICK.getBottomLeftPOS())
         WINDOW.getSurface().blit(BRICK.getBottomRightSurface(), BRICK.getBottomRightPOS())
-"""
-    def isCollision(self, WIDTH, HEIGHT, POS):
+
+    def isBrickCollision(self, WIDTH, HEIGHT, POS):
         '''
         use width, height, and POS of the ball, and see if it collides with the corresoponding brick
+        return: DIRECTION OF BALL MOVEMENT
         '''
-        """
+        # --- SIDES
+        # Top
+        if self.__BRICK_TOP.isCollision(WIDTH, HEIGHT, POS):
+            return (True, 1 , -1)
+        # Bottom
+        if self.__BRICK_BOTTOM.isCollision(WIDTH, HEIGHT, POS):
+            return (True, 1 , -1)
+        # Left
+        if self.__BRICK_LEFT.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1 , 1)
+        # Right
+        if self.__BRICK_RIGHT.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1, 1)
+
+        # --- CORNERS
+        # Top Left
+        if self.__TOP_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1 , -1)
+
+        # Top Right
+        if self.__TOP_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1, -1)
+
+        # Bottom Left
+        if self.__BOTTOM_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1 , -1)
+
+        # Bottom Right
+        if self.__BOTTOM_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
+            return (True, -1 , -1)
+
+        return (False, False, False)
+
+
+
 
 
 
@@ -163,16 +198,18 @@ if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("Asteroid Test", 800, 600, 30)
     BRICKS = []
+    ball = Box(5, 5)
+
     for i in range(25):
         BRICKS.append(Brick())
     X = 0
     Y = 10
-    START_X = 50
-    BRICK_GAP = 50
-    LAYERING = 0
+    START_X = 40
+    BRICK_GAP = 40
+    LAYERING = 5
     for BRICK in BRICKS:
         if X <= WINDOW.getWidth() - BRICK.getWidth():
-            BRICK.setBrickPOS(X+START_X + LAYERING, Y)
+            BRICK.setBrickPOS(X+START_X, Y)
             X += BRICK.getWidth() + BRICK_GAP
 
         else:
@@ -192,9 +229,18 @@ if __name__ == "__main__":
 
 
         WINDOW.clearScreen()
-
+        ball.bounceX(WINDOW.getWidth())
+        ball.bounceY(WINDOW.getHeight())
+        ball.checkBoundaries(WINDOW.getWidth(),WINDOW.getHeight())
         for BRICK in BRICKS:
+            collision = BRICK.isBrickCollision(ball.getWidth(), ball.getHeight(), ball.getPOS())
+            if collision[0]:
+                ball.changeDirX(collision[1])
+                ball.changeDirY(collision[2])
+
+
             BRICKS[i].blitBrick()
+        WINDOW.getSurface().blit(ball.getSurface(), ball.getPOS())
         WINDOW.updateFrame()
 
         
