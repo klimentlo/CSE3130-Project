@@ -120,6 +120,12 @@ class MySprite:
     def getY(self):
         return self.__Y
 
+    def getDirX(self):
+        return self.__DIR_X
+
+    def getDirY(self):
+        return self.__DIR_Y
+
     def getWidth(self):
         return self._SURFACE.get_width()
 

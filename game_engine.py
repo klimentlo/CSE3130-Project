@@ -46,18 +46,21 @@ class Game:
         self.__HEALTH_BAR.setColor(Color.GREEN)
         self.__HEALTH_BAR.setPOS(self.__HEALTH_TEXT.getX() + self.__HEALTH_TEXT.getWidth() + 4, 15)
 
+        # LEVEL
+        self.__LEVEL = 1
+
         # Bricks
         self.__BRICKS = []
-        self.__BRICKS_PER_ROW = 4
+        self.__BRICKS_PER_ROW = 6
         self.__BRICK_SPACING = 20
-
-        for i in range (24): #makes this many bricks
+        self.__TOTAL_BRICKS = 20
+        for i in range (20): #makes this many bricks
             self.__BRICKS.append(Brick())
 
 
         # BRICK ALIGNMENT BABY :D
 
-        xBrickPlacement = (self.__WINDOW.getWidth() - ((self.__BRICKS[0].getWidth() + self.__BRICK_SPACING) * self.__BRICKS_PER_ROW))/2 + self.__BRICK_SPACING//2 # Centers the bricks :D
+        xBrickPlacement = (self.__WINDOW.getWidth() - ((self.__BRICKS[0].getWidth() + self.__BRICK_SPACING) * self.__BRICKS_PER_ROW))/2 + self.__BRICK_SPACING//2 # Makes it so the row of bricks will be aligned properly
         yBrickPlacement = self.__BRICKS[0].getHeight() + self.__BRICK_SPACING # makes it so its a brick and a bit away from the ceiling
         bricksPlaced = 0
 
@@ -100,7 +103,7 @@ class Game:
 
             for BRICK in self.__BRICKS:
                 collision = BRICK.isBrickCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS())
-                if collision[0]:
+                if collision[0]: # collisions = [bool, float, float]      example:   [True, -1, 1]
                     self.__BALL.changeDirX(collision[1])
                     self.__BALL.changeDirY(collision[2])
 

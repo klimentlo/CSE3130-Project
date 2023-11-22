@@ -148,32 +148,18 @@ class Brick(MySprite):
         return self.__BOTTOM_RIGHT_CORNER.getPOS()
 
 
-
-
-  # def blitBrick(self):
-
-  #     # Brick
-  #     WINDOW.getSurface().blit(BRICK.getSurface(), BRICK.getPOS())
-
-  #     # Sides
-  #     WINDOW.getSurface().blit(BRICK.getLeftSurface(), BRICK.getLeftPOS())
-  #     WINDOW.getSurface().blit(BRICK.getRightSurface(), BRICK.getRightPOS())
-  #     WINDOW.getSurface().blit(BRICK.getTopSurface(), BRICK.getTopPOS())
-  #     WINDOW.getSurface().blit(BRICK.getBottomSurface(), BRICK.getBottomPOS())
-
-  #     # Corners
-  #     WINDOW.getSurface().blit(BRICK.getTopLeftSurface(), BRICK.getTopLeftPOS())
-  #     WINDOW.getSurface().blit(BRICK.getTopRightSurface(), BRICK.getTopRightPOS())
-  #     WINDOW.getSurface().blit(BRICK.getBottomLeftSurface(), BRICK.getBottomLeftPOS())
-  #     WINDOW.getSurface().blit(BRICK.getBottomRightSurface(), BRICK.getBottomRightPOS())
-
-
     def isBrickCollision(self, WIDTH, HEIGHT, POS):
         '''
         use width, height, and POS of the ball, and see if it collides with the corresoponding brick
         return: DIRECTION OF BALL MOVEMENT
         '''
+        # Whenever there is a -1, it is switching the direction it
+        #\/tells them it did collide
+        # [True, 1, -1]
+        #        /\   \ DIRY changes direction
+        #       DIRX remains the same
         # --- SIDES
+
         # Top
         if self.__BRICK_TOP.isCollision(WIDTH, HEIGHT, POS):
             return (True, 1 , -1)
