@@ -51,11 +51,11 @@ class Game:
 
         # Bricks
         self.__BRICKS = []
-        self.__BRICKS_PER_ROW = 6
-        self.__BRICK_SPACING = 20
-        self.__TOTAL_BRICKS = 20
-        for i in range (20): #makes this many bricks
-            self.__BRICKS.append(Brick())
+        self.__BRICKS_PER_ROW = 12
+        self.__BRICK_SPACING = 10
+        self.__TOTAL_BRICKS = 90
+        for i in range (self.__TOTAL_BRICKS): #makes this many bricks
+            self.__BRICKS.append(Brick(0.5))
 
 
         # BRICK ALIGNMENT BABY :D
@@ -106,6 +106,8 @@ class Game:
                 if collision[0]: # collisions = [bool, float, float]      example:   [True, -1, 1]
                     self.__BALL.changeDirX(collision[1])
                     self.__BALL.changeDirY(collision[2])
+                    BRICK.setBrickPOS(-100,-100)
+                    BRICK.setPOS(-100, -100)
 
             self.__updateWindowFrame()
 
