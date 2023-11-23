@@ -12,6 +12,7 @@ from box import Box
 from text import Text
 from color import Color
 from brick import Brick
+import random
 pygame.init()
 
 
@@ -25,7 +26,7 @@ class Game:
         # Ball
         self.__BALL = Box(10, 10)
         self.__BALL.setPOS(self.__WINDOW.getWidth()//2 - self.__BALL.getWidth()//2, self.__WINDOW.getHeight()*0.8)
-
+        self.__BALL.setSpeed(30)
         # Title Bar & Text
         self.__TITLE_BAR = Box(self.__WINDOW.getWidth(), self.__WINDOW.getHeight() // 10)
         self.__TITLE_BAR.setColor(Color.BLACK)
@@ -100,9 +101,11 @@ class Game:
 
             if self.__PLAYER.isCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS()):
                 self.__BALL.changeDirY(-1)
+                dirRandom = random.choice([0.01, -0.01])
+                self.__BALL.changeDirForce(dirRandom)
 
             for BRICK in self.__BRICKS:
-                collision = BRICK.isBrickCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS())
+                collision = BRICK.isBrickCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS(), self.__BALL.getDirX(), self.__BALL.getDirY())
                 if collision[0]: # collisions = [bool, float, float]      example:   [True, -1, 1]
                     self.__BALL.changeDirX(collision[1])
                     self.__BALL.changeDirY(collision[2])

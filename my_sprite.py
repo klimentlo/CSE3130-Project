@@ -5,6 +5,7 @@ author: kliment lo
 date-created: 2023/10/30
 '''
 import pygame
+import random
 
 class MySprite:
     '''
@@ -38,6 +39,8 @@ class MySprite:
     def setSpeed(self, SPEED):
         self._SPD = SPEED
 
+
+
     def setPOS(self, X, Y):
         self.setX(X)
         self.setY(Y)
@@ -50,6 +53,10 @@ class MySprite:
 
     def changeDirY(self, DIR):
         self.__DIR_Y *= DIR
+
+    def changeDirForce(self, dirForce):
+        self.__DIR_X += dirForce
+        self.__DIR_Y += dirForce
 
     def marqueeX(self, MAX_X, MIN_X=0):
         self.__X += self._SPD
@@ -108,7 +115,11 @@ class MySprite:
         if self.__Y < MIN_Y:
             self.__Y = MIN_Y
 
+        dirRandom = random.choice([0.01, -0.01])
+        self.changeDirForce(dirRandom)
+
         self.__POS = (self.__X, self.__Y)
+
 
     # ACCESSOR
     def getPOS(self):

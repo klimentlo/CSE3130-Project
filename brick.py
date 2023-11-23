@@ -148,7 +148,7 @@ class Brick(MySprite):
         return self.__BOTTOM_RIGHT_CORNER.getPOS()
 
 
-    def isBrickCollision(self, WIDTH, HEIGHT, POS):
+    def isBrickCollision(self, WIDTH, HEIGHT, POS, DIRX, DIRY):
         '''
         use width, height, and POS of the ball, and see if it collides with the corresoponding brick
         return: DIRECTION OF BALL MOVEMENT
@@ -163,6 +163,7 @@ class Brick(MySprite):
         # Top
         if self.__BRICK_TOP.isCollision(WIDTH, HEIGHT, POS):
             return (True, 1 , -1)
+
         # Bottom
         if self.__BRICK_BOTTOM.isCollision(WIDTH, HEIGHT, POS):
             return (True, 1 , -1)
@@ -173,22 +174,52 @@ class Brick(MySprite):
         if self.__BRICK_RIGHT.isCollision(WIDTH, HEIGHT, POS):
             return (True, -1, 1)
 
+
+
         # --- CORNERS
         # Top Left
         if self.__TOP_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1 , -1)
+            if DIRX == -1 and DIRY == 1:
+                return (True, 1 , -1)
+
+            elif DIRX == 1 and DIRY == -1:
+                return (True, -1, 1)
+
+            elif DIRX == 1 and DIRY == 1:
+                return (True, -1 , -1)
 
         # Top Right
         if self.__TOP_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1, -1)
+
+            if DIRX == -1 and DIRY == -1:
+                return (True, -1, 1)
+
+            elif DIRX == 1 and DIRY == 1:
+                return (True, 1, -1)
+            else:
+                return (True, -1, -1)
 
         # Bottom Left
         if self.__BOTTOM_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1 , -1)
+            if DIRX == -1 and DIRY == -1:
+                return (True, 1, -1)
+
+            elif DIRX == 1 and DIRY == 1:
+                return (True, -1, 1)
+
+            else:
+                return (True, -1, -1)
 
         # Bottom Right
         if self.__BOTTOM_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1 , -1)
+            if DIRX == -1 and DIRY == 1:
+                return (True, -1, 1)
+
+            elif DIRX == 1 and DIRY == -1:
+                return (True, 1, -1)
+
+            else:
+                return (True, -1, -1)
 
         return (False, False, False)
 
