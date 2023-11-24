@@ -56,7 +56,7 @@ class MySprite:
 
     def changeDirForce(self, dirForce):
         self.__DIR_X += dirForce
-        self.__DIR_Y += dirForce
+        self.__DIR_Y -= dirForce
 
     def marqueeX(self, MAX_X, MIN_X=0):
         self.__X += self._SPD
@@ -114,9 +114,6 @@ class MySprite:
 
         if self.__Y < MIN_Y:
             self.__Y = MIN_Y
-
-        dirRandom = random.choice([0.01, -0.01])
-        self.changeDirForce(dirRandom)
 
         self.__POS = (self.__X, self.__Y)
 

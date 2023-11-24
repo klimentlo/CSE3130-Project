@@ -59,6 +59,8 @@ class Brick(MySprite):
 
     # --- SETTER METHODS
 
+
+
     def setBrickPOS(self, X, Y):
         '''
         sets all collision boxes and surfaces to the set location :D

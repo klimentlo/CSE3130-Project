@@ -26,7 +26,7 @@ class Game:
         # Ball
         self.__BALL = Box(10, 10)
         self.__BALL.setPOS(self.__WINDOW.getWidth()//2 - self.__BALL.getWidth()//2, self.__WINDOW.getHeight()*0.8)
-        self.__BALL.setSpeed(30)
+        self.__BALL.setSpeed(5)
         # Title Bar & Text
         self.__TITLE_BAR = Box(self.__WINDOW.getWidth(), self.__WINDOW.getHeight() // 10)
         self.__TITLE_BAR.setColor(Color.BLACK)
@@ -52,11 +52,11 @@ class Game:
 
         # Bricks
         self.__BRICKS = []
-        self.__BRICKS_PER_ROW = 12
+        self.__BRICKS_PER_ROW = 8
         self.__BRICK_SPACING = 10
-        self.__TOTAL_BRICKS = 90
+        self.__TOTAL_BRICKS = 50
         for i in range (self.__TOTAL_BRICKS): #makes this many bricks
-            self.__BRICKS.append(Brick(0.5))
+            self.__BRICKS.append(Brick(0.8))
 
 
         # BRICK ALIGNMENT BABY :D
@@ -102,15 +102,24 @@ class Game:
             if self.__PLAYER.isCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS()):
                 self.__BALL.changeDirY(-1)
                 dirRandom = random.choice([0.01, -0.01])
+
                 self.__BALL.changeDirForce(dirRandom)
+                self.__BALL.setPOS(self.__BALL.getX(), self.__BALL.getY()-5)
+                print(self.__BALL.getDirX(),self.__BALL.getDirY())
 
             for BRICK in self.__BRICKS:
                 collision = BRICK.isBrickCollision(self.__BALL.getWidth(), self.__BALL.getHeight(), self.__BALL.getPOS(), self.__BALL.getDirX(), self.__BALL.getDirY())
                 if collision[0]: # collisions = [bool, float, float]      example:   [True, -1, 1]
                     self.__BALL.changeDirX(collision[1])
                     self.__BALL.changeDirY(collision[2])
+                    self.__TOTAL_BRICKS -=1
                     BRICK.setBrickPOS(-100,-100)
                     BRICK.setPOS(-100, -100)
+
+            if self.__TOTAL_BRICKS <= 0:
+                self.__LEVEL += 1
+
+
 
             self.__updateWindowFrame()
 
