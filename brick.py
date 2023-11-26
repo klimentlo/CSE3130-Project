@@ -176,6 +176,9 @@ class Brick(MySprite):
         if self.__BRICK_RIGHT.isCollision(WIDTH, HEIGHT, POS):
             return (True, -1, 1)
 
+    # RESTE
+        #TILL
+        #HERE!
 
 
         # --- CORNERS
@@ -187,6 +190,7 @@ class Brick(MySprite):
             elif DIRX == 1 and DIRY == -1:
                 return (True, -1, 1)
 
+            return (True, -1, -1)
 
         # Top Right
         if self.__TOP_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
@@ -197,6 +201,7 @@ class Brick(MySprite):
             elif DIRX == 1 and DIRY == 1:
                 return (True, 1, -1)
 
+            return (True, -1, -1)
 
         # Bottom Left
         if self.__BOTTOM_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
@@ -205,6 +210,8 @@ class Brick(MySprite):
 
             elif DIRX == 1 and DIRY == 1:
                 return (True, -1, 1)
+
+            return (True, -1, -1)
 
 
 
@@ -215,6 +222,8 @@ class Brick(MySprite):
 
             elif DIRX == 1 and DIRY == -1:
                 return (True, 1, -1)
+
+            return (True, -1, -1)
 
 
 

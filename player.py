@@ -18,7 +18,7 @@ class Player(MySprite):
         MySprite.__init__(self, 1, 1, 0, 0, SPEED, (255, 255, 255))
         self.__PLAYER_SPRITE = Box(175, 15)
         self._SURFACE = self.__PLAYER_SPRITE.getSurface()
-        self.__LIVES = 10
+        self.__LIVES = 3
         self.__GAME_OVER = False
 
 
