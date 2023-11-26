@@ -11,7 +11,7 @@ import pygame
 class Text(MySprite):
 
     def __init__(self, TEXT, F_FAMILY="Arial",F_SIZE=36,X=0, Y=0):
-        MySprite.__init__(self, X=X,Y=Y) # creates all the MySprite attributes into this __init__
+        MySprite.__init__(self, X=X,Y=Y) # creates all the MySprite attributes into this __init__.. # < --- Inheritance
         self.__TEXT = TEXT
         self.__FONT_FAMILY = F_FAMILY
         self.__FONT_SIZE = F_SIZE

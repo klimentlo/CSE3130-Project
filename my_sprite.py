@@ -80,8 +80,6 @@ class MySprite:
     def bounceY(self, MAX_Y, MIN_Y=0):
 
         self.__Y += self.__DIR_Y * self._SPD
-        if self.__Y > MAX_Y - self.getHeight():
-            self.__DIR_Y = -1
 
         if self.__Y < MIN_Y:
             self.__DIR_Y = 1
@@ -98,22 +96,6 @@ class MySprite:
             self.__X += self._SPD
         if KEYPRESSES[pygame.K_a] == 1:
             self.__X -= self._SPD
-
-        self.__POS = (self.__X, self.__Y)
-
-    def checkBoundaries(self, MAX_X, MAX_Y, MIN_X=0, MIN_Y=0):
-
-        if self.__X > MAX_X - self.getWidth():
-            self.__X = MAX_X - self.getWidth()
-
-        if self.__X < MIN_X:
-            self.__X = MIN_X
-
-        if self.__Y > MAX_Y - self.getHeight():
-            self.__Y = MAX_Y - self.getHeight()
-
-        if self.__Y < MIN_Y:
-            self.__Y = MIN_Y
 
         self.__POS = (self.__X, self.__Y)
 

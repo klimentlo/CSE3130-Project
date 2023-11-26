@@ -8,7 +8,7 @@ from color import Color
 
 class Brick(MySprite):
     def __init__(self, SCALE=1):
-        MySprite.__init__(self)
+        MySprite.__init__(self) # < --- Inheritance
         WIDTH = 100
         HEIGHT = 50
         # --- Construction of the brick (ATTRIBUTES)

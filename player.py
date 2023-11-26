@@ -9,13 +9,13 @@ date-created: 2023/11/06
 import pygame
 from my_sprite import MySprite
 from box import Box
-from brick import Brick
+
 
 class Player(MySprite):
 
     def __init__(self, SPEED=15): #  WIDTH, HEIGHT, X, Y, SPEED=5, COLOR=(255,255,255)
 
-        MySprite.__init__(self, 1, 1, 0, 0, SPEED, (255, 255, 255))
+        MySprite.__init__(self, 1, 1, 0, 0, SPEED, (255, 255, 255)) # < --- Inheritance
         self.__PLAYER_SPRITE = Box(175, 15)
         self._SURFACE = self.__PLAYER_SPRITE.getSurface()
         self.__HEALTH = 10
