@@ -12,7 +12,7 @@ import pygame
 class Box(MySprite):
 
     def __init__(self, WIDTH=1, HEIGHT=1):
-        MySprite.__init__(self, WIDTH, HEIGHT) # < --- Inheritance
+        MySprite.__init__(self, WIDTH, HEIGHT) # < --- Inheritance/Polymorphism
         self._SURFACE = pygame.Surface(self._DIMENSIONS, pygame.SRCALPHA, 32)
         self._SURFACE.fill(self._COLOR)
 

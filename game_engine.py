@@ -164,7 +164,6 @@ class Game:
         LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3")])  # (10, 5, 100, 0.4, "v4")
         while LEVEL_CONFIG[4] == self.__PREVIOUS_LEVEL: # while the level is the same as the last one, keep rolling
             LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3")]) #(10, 5, 100, 0.4, "v4")
-            print("hi")
         self.__PREVIOUS_LEVEL = LEVEL_CONFIG[4]
 
 
@@ -263,8 +262,7 @@ class Game:
         self.__WINDOW.getSurface().blit(self.__LIVES_TEXT.getSurface(), self.__LIVES_TEXT.getPOS())
         self.__WINDOW.getSurface().blit(self.__INTRO_TEXT.getSurface(), self.__INTRO_TEXT.getPOS())
         for BRICK in self.__BRICKS:
-
-
+            self.__WINDOW.getSurface().blit(BRICK.getSurface(), BRICK.getPOS())
             # Side Brick
             self.__WINDOW.getSurface().blit(BRICK.getLeftSurface(), BRICK.getLeftPOS())
             self.__WINDOW.getSurface().blit(BRICK.getRightSurface(), BRICK.getRightPOS())
@@ -278,7 +276,7 @@ class Game:
             self.__WINDOW.getSurface().blit(BRICK.getBottomRightSurface(), BRICK.getBottomRightPOS())
 
             # Actual Brick
-            self.__WINDOW.getSurface().blit(BRICK.getSurface(), BRICK.getPOS())
+
 
         # Player
         self.__WINDOW.getSurface().blit(self.__PLAYER.getSurface(), self.__PLAYER.getPOS())
