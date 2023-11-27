@@ -115,7 +115,7 @@ class Game:
                         self.__GAME_OVER = True # make it game over :(
             else:
                 if self.__gameOver() == "break": # asks if the user wants to play again, if they do, self.__gameOver retuns "break", which will allow the game to run again
-                    time.sleep(0.1) # so the ball doesn't immediately fly out
+                    time.sleep(0.5) # so the ball doesn't immediately fly out
                     break
 
 
@@ -129,7 +129,7 @@ class Game:
 
 
     # - - - COLLISIONS
-
+    # Processing
     def __playerBallCollisions(self, i): # is in a for i loop
         if self.__PLAYER.isCollision(self.__BALLS[i].getWidth(), self.__BALLS[i].getHeight(), self.__BALLS[i].getPOS()): # if it collides
             self.__BALLS[i].changeDirY(-1) # reverse the y direction ( makes it go updwards)
@@ -225,7 +225,8 @@ class Game:
         self.__GAME_OVER_TEXT.setPOS(self.__WINDOW.getWidth()//2-self.__GAME_OVER_TEXT.getWidth()//2, self.__WINDOW.getHeight()//2-self.__GAME_OVER_TEXT.getHeight()//2) # center over text
         self.__INTRO_TEXT = Text("Press SPACE to play again!")
         self.__INTRO_TEXT.setPOS(self.__WINDOW.getWidth() // 2 - self.__INTRO_TEXT.getWidth() // 2, self.__WINDOW.getHeight() * 0.75)
-
+        self.__PLAYER.setPOS(-100, -100)
+        self.__BALLS[0].setPOS(-100, -100)
         REPLAY = pygame.key.get_pressed()
         if REPLAY[pygame.K_SPACE] == 1:
             return "break" # reruns game

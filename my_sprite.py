@@ -64,13 +64,6 @@ class MySprite: # ABSTRACTION!!!!! ABSTRACT CLASSSS
         self.__DIR_X += dirForce
         self.__DIR_Y -= dirForce
 
-    def marqueeX(self, MAX_X, MIN_X=0):
-        self.__X += self._SPD
-
-        if self.__X > MAX_X:
-            self.__X = MIN_X - self.getWidth()
-
-        self.__POS = (self.__X, self.__Y)
 
     def bounceX(self, MAX_X, MIN_X=0):
 
@@ -163,12 +156,3 @@ class MySprite: # ABSTRACTION!!!!! ABSTRACT CLASSSS
             return True
         else:
             return False
-
-    def getCenter(self):
-        '''
-        finds the center position of the Surface and return the coordinate
-        :return: tuple[int]
-        '''
-        X_CENTER = self.__X + self.getWidth()//2
-        Y_CENTER = self.__Y + self.getHeight()//2
-        return (X_CENTER, Y_CENTER)
