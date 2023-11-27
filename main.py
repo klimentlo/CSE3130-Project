@@ -2,7 +2,7 @@
 
 '''
 title: Main program
-author: kliment lo
+author: Kliment lo
 date-created: 2023/11/06
 '''
 from game_engine import Game

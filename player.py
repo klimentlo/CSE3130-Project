@@ -8,7 +8,6 @@ date-created: 2023/11/06
 import pygame
 from my_sprite import MySprite
 from box import Box
-from brick import Brick
 
 class Player(MySprite):
 

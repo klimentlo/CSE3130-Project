@@ -5,6 +5,8 @@ title: game engine for brick breaker
 author: kliment lo
 date-created: 2023/11/21
 '''
+
+
 import pygame
 from player import Player
 from window import Window
@@ -20,14 +22,13 @@ pygame.init()
 
 class Game:
     def __init__(self):
-        # Player
+        # Window
         self.__WINDOW = Window("Brick Breaker", 800, 600, 60)
+
+        # Player
+
         self.__PLAYER = Player(10)
         self.__PLAYER.setPOS(self.__WINDOW.getWidth()//2 - self.__PLAYER.getWidth()//2, self.__WINDOW.getHeight()*0.9)
-
-        self.__START_LEVEL = False
-        self.__GAME_OVER = False
-        self.__additionalBallTimer = time.time()
 
         # Ball
         self.__TOTAL_BALLS = 1
@@ -52,7 +53,7 @@ class Game:
         self.__GAME_OVER_TEXT = Text("GAME OVER", "Arial", 100)
         self.__GAME_OVER_TEXT.setPOS(-100, -100)
 
-        # Score
+        # Score & Text
         self.__SCORE = 0
         self.__SCORE_TEXT = Text(f"SCORE: {self.__SCORE}")
         self.__SCORE_TEXT.setPOS(self.__WINDOW.getWidth() - self.__SCORE_TEXT.getWidth() - 10, 5)
@@ -62,14 +63,15 @@ class Game:
         self.__LIVES_TEXT = Text(f"LIVES: {self.__PLAYER.getLives()}")
         self.__LIVES_TEXT.setPOS(10, 5)
 
-        # Round``
+        # Round & Text
         self.__ROUND = 1
-
-        #
         self.__ROUND_TEXT = Text(f"Round {self.__ROUND}")
         self.__ROUND_TEXT.setPOS(-100,-100)
 
         self.__roundConsuctor()
+        self.__START_LEVEL = False
+        self.__GAME_OVER = False
+        self.__additionalBallTimer = time.time()
 
 
 
@@ -77,7 +79,10 @@ class Game:
 
 
 
-# basically everything is encapsulated
+# basically everything is encapsulated (self.__bonusBallTimer())
+                                        #    ^^
+                                        # Encapsulation
+
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -86,36 +91,36 @@ class Game:
                     exit()
 
 
-            self.__startLevel()
-            if self.__GAME_OVER != True:
-                if self.__START_LEVEL == True:
-                    self.__bonusBallTimer(15)
+            self.__startLevel() # Game will only start if space bar is pressed
+            if self.__GAME_OVER != True: # if its not game over
+                if self.__START_LEVEL == True: # if they want to start the game
+                    self.__bonusBallTimer(15) # begin timer for bonus ball (15 seconds)
 
-                    KEYS_PRESSED = pygame.key.get_pressed()
-                    self.__PLAYER.ADmove(KEYS_PRESSED)
-                    self.__PLAYER.checkBoundaries(self.__WINDOW.getWidth(), self.__WINDOW.getHeight())
+                    KEYS_PRESSED = pygame.key.get_pressed() # gets key pressed
+                    self.__PLAYER.ADmove(KEYS_PRESSED) # if desired key is pressed, move side to side
+                    self.__PLAYER.checkBoundaries(self.__WINDOW.getWidth(), self.__WINDOW.getHeight()) # keeps the player bar in boundaries
 
-                    for i in range(len(self.__BALLS) - 1, -1, -1):
-                        self.__playerBallCollisions(i) # < AGGREGATION
-                        self.__ballBrickCollisions(i)# < AGGREGATION
+                    for i in range(len(self.__BALLS) - 1, -1, -1): # runs backwards because inside the function, there are objects that get popped off.
+                        self.__playerBallCollisions(i) # < AGGREGATION # Tracks collision between player and ball
+                        self.__ballBrickCollisions(i)# < AGGREGATION # Tracks collision between ball and brick
 
-                    self.__checkDeadBalls()  # checks if any have died
+                    self.__checkDeadBalls()  # checks if any balls have died at the bottom, and if the main one did die, we lose a life and all balls reset.
 
-                    if self.__TOTAL_BRICKS <= 0:
-                        self.__ROUND += 1
-                        self.__resetLevel()
-                        self.__roundConsuctor()
+                    if self.__TOTAL_BRICKS <= 0: # if all bricks are dead
+                        self.__ROUND += 1 # proceed to next round
+                        self.__resetLevel() # resets ball POS and player POS, and also allows user to play when they hit space (and not instantly allow the ball to move again)
+                        self.__roundConsuctor() # constructs another map, makes sure its not the same one
 
-                    if self.__PLAYER.getLives() <= 0:
-                        self.__GAME_OVER = True
+                    if self.__PLAYER.getLives() <= 0: # if they lose all lives
+                        self.__GAME_OVER = True # make it game over :(
             else:
-                if self.__gameOver() == "break":
-                    time.sleep(0.1)
+                if self.__gameOver() == "break": # asks if the user wants to play again, if they do, self.__gameOver retuns "break", which will allow the game to run again
+                    time.sleep(0.1) # so the ball doesn't immediately fly out
                     break
 
 
 
-            self.__updateWindowFrame()
+            self.__updateWindowFrame() # updates, blits, and clears everything on the screen
 
 
 
@@ -125,28 +130,28 @@ class Game:
 
     # - - - COLLISIONS
 
-    def __playerBallCollisions(self, i):
-        if self.__PLAYER.isCollision(self.__BALLS[i].getWidth(), self.__BALLS[i].getHeight(), self.__BALLS[i].getPOS()):
-            self.__BALLS[i].changeDirY(-1)
-            dirRandom = random.choice([0.01, -0.01])
-            self.__BALLS[i].changeDirForce(dirRandom)
+    def __playerBallCollisions(self, i): # is in a for i loop
+        if self.__PLAYER.isCollision(self.__BALLS[i].getWidth(), self.__BALLS[i].getHeight(), self.__BALLS[i].getPOS()): # if it collides
+            self.__BALLS[i].changeDirY(-1) # reverse the y direction ( makes it go updwards)
+            dirRandom = random.choice([0.01, -0.01])  # this is to reduce the chances of an infinite loop of missing a brick
+            self.__BALLS[i].changeDirForce(dirRandom) # applies those changes via adding to dir value
             self.__BALLS[i].setPOS(self.__BALLS[i].getX(), self.__BALLS[i].getY() - 5)  # makes it so if you collide with it from the side, it won't glitch like crazy
 
 
 
     def __ballBrickCollisions(self, i):
-        for BRICK in self.__BRICKS:
-            collision = BRICK.isBrickCollision(self.__BALLS[i].getWidth(), self.__BALLS[i].getHeight(), self.__BALLS[i].getPOS(), self.__BALLS[i].getDirX(), self.__BALLS[i].getDirY())
-            if collision[0]:  # collisions = [bool, float, float]      example:   [True, -1, 1]
-                self.__BALLS[i].setDirX(collision[1])
-                self.__BALLS[i].setDirY(collision[2])
-                self.__TOTAL_BRICKS -= 1
-                BRICK.setBrickPOS(-100, -100)
-                BRICK.setPOS(-100, -100)
+        for BRICK in self.__BRICKS: # for amoutn of bricks
+            collision = BRICK.isBrickCollision(self.__BALLS[i].getWidth(), self.__BALLS[i].getHeight(), self.__BALLS[i].getPOS(), self.__BALLS[i].getDirX(), self.__BALLS[i].getDirY()) # check if it collided
+            if collision[0]:  # collisions = [bool, float, float]      example:   [True, -1, 1]  # if it did
+                self.__BALLS[i].setDirX(collision[1]) # make ball go in desired direction
+                self.__BALLS[i].setDirY(collision[2]) # make ball go in desired  direction
+                self.__TOTAL_BRICKS -= 1 # minus one brick
+                BRICK.setBrickPOS(-100, -100) # takes collision boxes of the screen
+                BRICK.setPOS(-100, -100) # takes actual brick off screen
                 # updates score
-                self.__SCORE += 10
-                self.__SCORE_TEXT.setText(f"Score: {self.__SCORE}")
-                self.__SCORE_TEXT.setX(self.__WINDOW.getWidth() - self.__SCORE_TEXT.getWidth() - 10)
+                self.__SCORE += 10 # adds score
+                self.__SCORE_TEXT.setText(f"Score: {self.__SCORE}") # updates score text
+                self.__SCORE_TEXT.setX(self.__WINDOW.getWidth() - self.__SCORE_TEXT.getWidth() - 10) # Makes sure score is in frame
 
 
 
@@ -155,14 +160,11 @@ class Game:
     def __roundConsuctor(self):
         # Bricks
         self.__BRICKS = []
-        try:
-            while LEVEL_CONFIG[4] == self.__PREVIOUS_LEVEL: # while the level is the same as the last one, keep rolling
-                LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3"), (10, 5, 100, 0.4, "v4")])
-                if LEVEL_CONFIG[4] == self.__PREVIOUS_LEVEL:
-                    LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3"), (10, 5, 100, 0.4, "v4")])
-
-        except UnboundLocalError:
-            LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (8, 20, 24, 0.8, "v2"), (8, 5, 56, 0.7, "v3"), (10, 10, 100, 0.4, "v4")])
+        self.__PREVIOUS_LEVEL = (6, 5, 24, 1, "v1")
+        LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3")])  # (10, 5, 100, 0.4, "v4")
+        while LEVEL_CONFIG[4] == self.__PREVIOUS_LEVEL: # while the level is the same as the last one, keep rolling
+            LEVEL_CONFIG = random.choice([(6, 5, 24, 1, "v1"), (4, 5, 32, 0.8, "v2"), (8, 5, 56, 0.7, "v3")]) #(10, 5, 100, 0.4, "v4")
+            print("hi")
         self.__PREVIOUS_LEVEL = LEVEL_CONFIG[4]
 
 
@@ -185,46 +187,50 @@ class Game:
                 BRICK.setBrickPOS(xBrickPlacement, yBrickPlacement)
                 BRICK.setPOS(xBrickPlacement, yBrickPlacement)
             else:
-                yBrickPlacement += (BRICK.getHeight() + self.__BRICK_SPACING)
-                xBrickPlacement = (self.__WINDOW.getWidth() - ((self.__BRICKS[
-                                                                    0].getWidth() + self.__BRICK_SPACING) * self.__BRICKS_PER_ROW)) / 2 + self.__BRICK_SPACING // 2
+                yBrickPlacement += (BRICK.getHeight() + self.__BRICK_SPACING) # moves it down by a brick and a bit
+                xBrickPlacement = (self.__WINDOW.getWidth() - ((self.__BRICKS[0].getWidth() + self.__BRICK_SPACING) * self.__BRICKS_PER_ROW)) / 2 + self.__BRICK_SPACING // 2 # all bricks are evenly spready out and in the middle of the screen
                 BRICK.setBrickPOS(xBrickPlacement, yBrickPlacement)
                 BRICK.setPOS(xBrickPlacement, yBrickPlacement)
                 bricksPlaced = 0
 
-            xBrickPlacement += BRICK.getWidth() + self.__BRICK_SPACING  # how far the brick is placed away from the wall
+            xBrickPlacement += BRICK.getWidth() + self.__BRICK_SPACING  # how far the brick is placed one another
             bricksPlaced += 1
 
 
     def __startLevel(self):
         KEYS_PRESSED = pygame.key.get_pressed()
         if KEYS_PRESSED[pygame.K_SPACE] == 1:
-            self.__BALLS[0].setSpeed(4)
-            self.__additionalBallTimer = time.time()
-            self.__START_LEVEL = True
-            self.__INTRO_TEXT.setPOS(-50, -50)
+            self.__BALLS[0].setSpeed(4) # makes the ball move
+            self.__additionalBallTimer = time.time() # starts timer
+            self.__START_LEVEL = True # allows game to run
+            self.__INTRO_TEXT.setPOS(-50, -50) # take intro text away
 
 
 
     def __resetLevel(self):
-        self.__START_LEVEL = False
-        self.__BALLS = [Ball()]
-        self.__BALLS[0].setPOS(self.__WINDOW.getWidth() // 2 - self.__BALLS[0].getWidth() // 2,
+        self.__START_LEVEL = False # stops level
+        self.__BALLS = [Ball()] # only main ball
+        self.__BALLS[0].setPOS(self.__WINDOW.getWidth() // 2 - self.__BALLS[0].getWidth() // 2, # center it
                                self.__WINDOW.getHeight() * 0.85)
-        self.__PLAYER.setPOS(self.__WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2,
+        self.__PLAYER.setPOS(self.__WINDOW.getWidth() // 2 - self.__PLAYER.getWidth() // 2, # center it
                              self.__WINDOW.getHeight() * 0.9)
 
     def __gameOver(self):
-        self.__GAME_OVER_TEXT.setPOS(self.__WINDOW.getWidth()//2-self.__GAME_OVER_TEXT.getWidth()//2, self.__WINDOW.getHeight()//2-self.__GAME_OVER_TEXT.getHeight()//2)
-        self.__INTRO_TEXT = Text("Press SPACE to play again!")
-        self.__INTRO_TEXT.setPOS(self.__WINDOW.getWidth() // 2 - self.__INTRO_TEXT.getWidth() // 2, self.__WINDOW.getHeight() * 0.75)
-        REPLAY = pygame.key.get_pressed()
-        if REPLAY[pygame.K_SPACE] == 1:
-            return "break"
 
-        for BRICK in self.__BRICKS:
+        for BRICK in self.__BRICKS: # reomves all brick form screen
             BRICK.setBrickPOS(-100, -100)
             BRICK.setPOS(-100, -100)
+
+
+        self.__GAME_OVER_TEXT.setPOS(self.__WINDOW.getWidth()//2-self.__GAME_OVER_TEXT.getWidth()//2, self.__WINDOW.getHeight()//2-self.__GAME_OVER_TEXT.getHeight()//2) # center over text
+        self.__INTRO_TEXT = Text("Press SPACE to play again!")
+        self.__INTRO_TEXT.setPOS(self.__WINDOW.getWidth() // 2 - self.__INTRO_TEXT.getWidth() // 2, self.__WINDOW.getHeight() * 0.75)
+
+        REPLAY = pygame.key.get_pressed()
+        if REPLAY[pygame.K_SPACE] == 1:
+            return "break" # reruns game
+
+
 
 
 # - - - Balls
@@ -233,22 +239,22 @@ class Game:
             self.__BALLS[i].bounceX(self.__WINDOW.getWidth())
             self.__BALLS[i].bounceY(self.__WINDOW.getHeight(), self.__TITLE_BAR.getX()+self.__TITLE_BAR.getHeight())
             if self.__BALLS[i].isLost(self.__WINDOW.getWidth(), self.__WINDOW.getHeight()):
-                self.__BALLS.pop(i)
+                self.__BALLS.pop(i) # removes ball from pygame
                 if i == 0:  # if it was our first original ball
-                    self.__PLAYER.loseLife()
-                    self.__resetLevel()
+                    self.__PLAYER.loseLife() # if it was main ball, player lsoes a life
+                    self.__resetLevel() # balls are all removed, with the main one returning to center, and so does the palyer
                     self.__LIVES_TEXT.setText(f"LIVES: {self.__PLAYER.getLives()}")
 
 
     def __bonusBallTimer(self, DURATION):
-        if time.time() > self.__additionalBallTimer + DURATION:
+        if time.time() > self.__additionalBallTimer + DURATION: # when desired amoutn of time has passed
             self.__BALLS.append(Ball("BonusBall", 4))
-            self.__additionalBallTimer = time.time()
+            self.__additionalBallTimer = time.time() # resetcs timer
 
 
 
 
-    def __updateWindowFrame(self):
+    def __updateWindowFrame(self): # blits everyhting on to screen
         self.__WINDOW.clearScreen()
         self.__WINDOW.getSurface().blit(self.__TITLE_BAR.getSurface(), self.__TITLE_BAR.getPOS())
         self.__WINDOW.getSurface().blit(self.__TITLE_TEXT.getSurface(), self.__TITLE_TEXT.getPOS())

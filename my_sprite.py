@@ -5,7 +5,6 @@ author: kliment lo
 date-created: 2023/11/26
 '''
 import pygame
-import random
 
 
 class MySprite: # ABSTRACTION!!!!! ABSTRACT CLASSSS

@@ -11,6 +11,8 @@ class Brick(MySprite):
         MySprite.__init__(self) # < --- Inheritance
         WIDTH = 100
         HEIGHT = 50
+
+        # Made so no matter the size of the brick, the collision boxes will scale proportionally
         # --- Construction of the brick (ATTRIBUTES)
         self.__BRICK_SPRITE = Box(WIDTH, HEIGHT)
         self.__BRICK_SPRITE.setScale(SCALE)
@@ -54,8 +56,6 @@ class Brick(MySprite):
         self.__BOTTOM_RIGHT_CORNER.setColor(Color.GREEN)
         self.__BOTTOM_RIGHT_CORNER.setScale(SCALE)
 
-        self.__HIT = False
-
 
     # --- SETTER METHODS
 
@@ -71,7 +71,7 @@ class Brick(MySprite):
 
         self.__BRICK_SPRITE.setPOS(X, Y)
 
-        # Sides         If this\/ doesn't work, change the X to Brick.getX() :D
+        # Sides
         self.__BRICK_TOP.setPOS(X + self.__BRICK_SPRITE.getWidth() // 2 - self.__BRICK_TOP.getWidth() // 2, Y)
         self.__BRICK_BOTTOM.setPOS(X + self.__BRICK_SPRITE.getWidth() // 2 - self.__BRICK_TOP.getWidth() // 2,
                                    Y + self.__BRICK_SPRITE.getHeight() - self.__BRICK_BOTTOM.getHeight())
@@ -150,6 +150,7 @@ class Brick(MySprite):
         return self.__BOTTOM_RIGHT_CORNER.getPOS()
 
 
+    # Processing
     def isBrickCollision(self, WIDTH, HEIGHT, POS, DIRX, DIRY):
         '''
         use width, height, and POS of the ball, and see if it collides with the corresoponding brick
@@ -175,10 +176,6 @@ class Brick(MySprite):
         # Right
         if self.__BRICK_RIGHT.isCollision(WIDTH, HEIGHT, POS):
             return (True, 1, DIRY)
-
-    # RESTE
-        #TILL
-        #HERE!
 
 
         # --- CORNERS

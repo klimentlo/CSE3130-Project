@@ -27,7 +27,7 @@ if __name__ == "__main__":
     pygame.init()
 
     WINDOW = Window("TEXT Example", 800, 600, 30)
-    TEXT = Text("Hello World")
+    TEXT = Text("Hello Wold")
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

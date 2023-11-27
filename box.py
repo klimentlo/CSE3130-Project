@@ -29,7 +29,6 @@ class Box(MySprite):
 
 if __name__ == "__main__":
     from window import Window
-    from random import randrange
     pygame.init()
     WINDOW = Window("Box", 800, 600, 60)
     #BOX = Box(100, 100)

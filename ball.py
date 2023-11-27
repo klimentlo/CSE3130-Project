@@ -32,8 +32,8 @@ class Ball(MySprite):
 
 
     def isLost(self, MAX_X, MAX_Y, MIN_X=0, MIN_Y=0):
-        MySprite.checkBoundaries(self, MAX_X, MAX_Y) # < --- POLYMORPHISM
-        if self.getY() == MAX_Y - self.getHeight():
+        MySprite.checkBoundaries(self, MAX_X, MAX_Y) # < ---- POLYMORPHISM
+        if self.getY() == MAX_Y - self.getHeight(): # if it hits the bottom, return true
             return True
 
 

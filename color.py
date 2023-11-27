@@ -2,7 +2,7 @@
 '''
 title: Color for pygame
 author: kliment lo
-date-created: 2023/11/26
+date-created: 2023/11/25
 '''
 
 class Color:
