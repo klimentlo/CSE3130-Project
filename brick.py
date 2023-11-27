@@ -1,4 +1,10 @@
 #brick.py
+'''
+title: brick class
+author: kliment lo
+date-created: 2023/11/26
+'''
+
 from my_sprite import MySprite
 from box import Box
 import pygame

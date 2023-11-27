@@ -17,13 +17,10 @@ class Player(MySprite):
         self.__PLAYER_SPRITE = Box(175, 15)
         self._SURFACE = self.__PLAYER_SPRITE.getSurface()
         self.__LIVES = 3
-        self.__GAME_OVER = False
 
 
     # SETTER METHOD
-    def isDead(self):
-        if self.__LIVES <= 0:
-            self.__GAME_OVER = True
+
     def loseLife(self):
         self.__LIVES -= 1
 
