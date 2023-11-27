@@ -1,8 +1,9 @@
-# box.py in d_inheritance(folder)
+# box.py
 '''
+
 title: box class
 author: kliment lo
-date-created: 2023/10/30
+date-created: 2023/11/26
 '''
 
 from my_sprite import MySprite

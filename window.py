@@ -1,8 +1,8 @@
-# window.py in f_ghostly (folder)
+# window.py
 '''
 title: Window class for pygame
 author: kliment lo
-date-created: 2023-10-30
+date-created: 2023-11-26
 '''
 
 import pygame

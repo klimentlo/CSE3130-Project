@@ -1,4 +1,4 @@
-# player.py in g_asteroids (folder)
+# ball.py
 
 '''
 title: player class
@@ -18,7 +18,6 @@ class Ball(MySprite):
         self.__BALL_SPRITE = Box(10, 10)
         if isBonus == "BonusBall":
             self.__BALL_SPRITE.setColor(Color.NEON)
-            X = random.randrange(200,600)
             self.setPOS(random.randrange(200,600), 480)
             self.changeDirY(-1)
             self.changeDirX(random.choice([-1, 1]))

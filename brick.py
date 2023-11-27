@@ -70,7 +70,7 @@ class Brick(MySprite):
         '''
 
         self.__BRICK_SPRITE.setPOS(X, Y)
-        self.__BRICK_SPRITE.setColor(Color.ORANGE)
+
         # Sides         If this\/ doesn't work, change the X to Brick.getX() :D
         self.__BRICK_TOP.setPOS(X + self.__BRICK_SPRITE.getWidth() // 2 - self.__BRICK_TOP.getWidth() // 2, Y)
         self.__BRICK_BOTTOM.setPOS(X + self.__BRICK_SPRITE.getWidth() // 2 - self.__BRICK_TOP.getWidth() // 2,
@@ -164,17 +164,17 @@ class Brick(MySprite):
 
         # Top
         if self.__BRICK_TOP.isCollision(WIDTH, HEIGHT, POS):
-            return (True, 1 , -1)
+            return (True, DIRX , -1)
 
         # Bottom
         if self.__BRICK_BOTTOM.isCollision(WIDTH, HEIGHT, POS):
-            return (True, 1 , -1)
+            return (True, DIRX , 1)
         # Left
         if self.__BRICK_LEFT.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1 , 1)
+            return (True, -1 , DIRY)
         # Right
         if self.__BRICK_RIGHT.isCollision(WIDTH, HEIGHT, POS):
-            return (True, -1, 1)
+            return (True, 1, DIRY)
 
     # RESTE
         #TILL
@@ -184,46 +184,49 @@ class Brick(MySprite):
         # --- CORNERS
         # Top Left
         if self.__TOP_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            if DIRX == -1 and DIRY == 1:
-                return (True, 1 , -1)
+            if DIRX < 0 and DIRY > 0:
+                return (True, DIRX , -1)
 
-            elif DIRX == 1 and DIRY == -1:
-                return (True, -1, 1)
-
-            return (True, -1, -1)
+            elif DIRX > 0 and DIRY < 0:
+                return (True, -1, DIRY)
+            else:
+                return (True, -1, -1)
 
         # Top Right
         if self.__TOP_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
 
-            if DIRX == -1 and DIRY == -1:
-                return (True, -1, 1)
+            if DIRX < 0 and DIRY < 0:
+                return (True, 1, DIRY)
 
-            elif DIRX == 1 and DIRY == 1:
+            elif DIRX > 0 and DIRY > 0:
+                return (True, DIRX, -1)
+
+            else:
                 return (True, 1, -1)
-
-            return (True, -1, -1)
 
         # Bottom Left
         if self.__BOTTOM_LEFT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            if DIRX == -1 and DIRY == -1:
-                return (True, 1, -1)
+            if DIRX < 0 and DIRY < 0:
+                return (True, DIRX, -1)
 
-            elif DIRX == 1 and DIRY == 1:
+            elif DIRX > 0 and DIRY > 0:
+                return (True, -1, DIRY)
+
+            else:
                 return (True, -1, 1)
-
-            return (True, -1, -1)
 
 
 
         # Bottom Right
         if self.__BOTTOM_RIGHT_CORNER.isCollision(WIDTH, HEIGHT, POS):
-            if DIRX == -1 and DIRY == 1:
-                return (True, -1, 1)
+            if DIRX < 0 and DIRY > 0:
+                return (True, 1, DIRY)
 
-            elif DIRX == 1 and DIRY == -1:
-                return (True, 1, -1)
+            elif DIRX > 0 and DIRY < 0:
+                return (True, DIRX, 1)
 
-            return (True, -1, -1)
+            else:
+                return (True, 1, 1)
 
 
 

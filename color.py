@@ -1,8 +1,8 @@
-# color.py in f_ghostly (folder)
+# color.py
 '''
 title: Color for pygame
 author: kliment lo
-date-created: 2023/10/30
+date-created: 2023/11/26
 '''
 
 class Color:

@@ -1,5 +1,4 @@
-# player.py in g_asteroids (folder)
-
+# player.py
 '''
 title: player class
 author: kliment lo

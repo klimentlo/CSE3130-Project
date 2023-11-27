@@ -1,13 +1,14 @@
-# my_sprite.py in f_ghostly (folder)
+# my_sprite.py
 '''
 title: abstract sprite class
 author: kliment lo
-date-created: 2023/10/30
+date-created: 2023/11/26
 '''
 import pygame
 import random
 
-class MySprite:
+
+class MySprite: # ABSTRACTION!!!!! ABSTRACT CLASSSS
     '''
     abstract sprite class to build other sprites. they should be generic where both objects should share in attributes
     '''
@@ -47,6 +48,12 @@ class MySprite:
 
     def setScale(self, SCALE):
         self._SURFACE = pygame.transform.scale(self._SURFACE, (self.getWidth() * SCALE, self.getHeight() * SCALE))
+
+    def setDirX(self, DIR):
+        self.__DIR_X = DIR
+
+    def setDirY(self, DIR):
+        self.__DIR_Y = DIR
 
     def changeDirX(self, DIR):
         self.__DIR_X *= DIR
